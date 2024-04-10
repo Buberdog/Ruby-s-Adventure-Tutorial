@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+//using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Scripting.APIUpdating;
+//using UnityEngine.Rendering;
+//using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.UI;
+using TMPro;
 
 public class EnemyController : MonoBehaviour
 {
     public float speed;
     public bool vertical;
     public float changeTime = 3.0f;
+    public TextMeshProUGUI score;
+    
 
     public ParticleSystem smokeEffect;
     Rigidbody2D rigidbody2D;
@@ -19,12 +23,15 @@ public class EnemyController : MonoBehaviour
 
     Animator animator;
 
+    public RubyController rC;
+
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         timer = changeTime;
         animator = GetComponent<Animator>();
+        score.text = "Fixed Robots: " + rC.scoreNum.ToString();
     }
 
     void Update()
@@ -87,5 +94,10 @@ public class EnemyController : MonoBehaviour
         rigidbody2D.simulated = false;
         
         smokeEffect.Stop();
+        animator.SetBool("Fixed", true);
+
+        rC.scoreNum++;
+        score.text = "Fixed Robots: " + rC.scoreNum.ToString();
+
     }
 }

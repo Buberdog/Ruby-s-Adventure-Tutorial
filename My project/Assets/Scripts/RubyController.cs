@@ -5,7 +5,7 @@ using System.Collections.Generic;
 //using System.Numerics;
 
 //using System.Numerics;
-using Unity.VisualScripting;
+//using Unity.VisualScripting;
 // using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
@@ -31,10 +31,15 @@ public class RubyController : MonoBehaviour
     float horizontal;
     float vertical;
 
-    Animator animator;
+    public Animator animator;
     Vector2 lookDirection = new Vector2(1,0);
 
     AudioSource audioSource;
+
+    public ParticleSystem gainHealth;
+    public ParticleSystem looseHealth;
+
+    public int scoreNum;
 
 
     // Start is called before the first frame update
@@ -113,6 +118,14 @@ public class RubyController : MonoBehaviour
             invincibleTimer = timeInvincible;
 
             PlaySound(hitSound);
+
+            looseHealth.Play();
+            
+        }
+
+        if(amount > 0)
+        {
+            gainHealth.Play();
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
