@@ -8,7 +8,12 @@ public class EndScreen : MonoBehaviour
 {
     public RubyController rC;
     public TextMeshProUGUI endScreen;
-    
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip win;
+    [SerializeField] private AudioClip lose;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +30,15 @@ public class EndScreen : MonoBehaviour
 
     private void Display()
     {
-        if(rC.scoreNum == 3)
+        if(rC.scoreNum == 4)
         {
         
             endScreen.text = "You Win! Group # 31";
             rC.animator.SetBool("EndGame", true);
             rC.speed = 0;
+
+            audioSource.clip = win;
+            audioSource.PlayOneShot(audioSource.clip);
 
             if(Input.GetKeyDown(KeyCode.R))
             {
@@ -45,6 +53,9 @@ public class EndScreen : MonoBehaviour
 
             rC.animator.SetBool("EndGame", true);
             //rC.gameObject.SetActive(false);
+
+            audioSource.clip = lose;
+            audioSource.PlayOneShot(audioSource.clip);
 
             rC.speed = 0;
 

@@ -16,17 +16,18 @@ public class EnemyController : MonoBehaviour
     
 
     public ParticleSystem smokeEffect;
-    Rigidbody2D rigidbody2D;
-    float timer;
-    int direction = 1;
-    bool broken = true;
+    protected Rigidbody2D rigidbody2D;  //Changed to protected Sadie Raghunand
+    public float timer;
+    protected int direction = 1; //Changed to protected Sadie Raghunand
+    public bool broken = true;
 
-    Animator animator;
+    protected Animator animator; //Changed to protected Sadie Raghunand
+    [SerializeField] private AudioSource audioSource;
 
     public RubyController rC;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start() //Changed to protected virtual by Sadie Raghunand
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         timer = changeTime;
@@ -34,7 +35,7 @@ public class EnemyController : MonoBehaviour
         score.text = "Fixed Robots: " + rC.scoreNum.ToString();
     }
 
-    void Update()
+     protected virtual void Update() //Changed to protected virtual by Sadie Raghunand
     {
 
         if(!broken)
@@ -52,7 +53,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+     void FixedUpdate()
     {
 
         if(!broken)
@@ -95,6 +96,8 @@ public class EnemyController : MonoBehaviour
         
         smokeEffect.Stop();
         animator.SetBool("Fixed", true);
+
+        audioSource.Play();
 
         rC.scoreNum++;
         score.text = "Fixed Robots: " + rC.scoreNum.ToString();

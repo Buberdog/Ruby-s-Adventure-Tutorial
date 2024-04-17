@@ -10,6 +10,8 @@ public class NonPlayerCharacter : MonoBehaviour
 
     float timerDisplay;
 
+    public AudioSource audioSource;
+
     void Start()
     {
         dialogBox.SetActive(false);
@@ -33,5 +35,7 @@ public class NonPlayerCharacter : MonoBehaviour
     {
         timerDisplay = displayTime;
         dialogBox.SetActive(true);
+
+        audioSource.Play();
     }
 }

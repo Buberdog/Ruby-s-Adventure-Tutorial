@@ -8,6 +8,7 @@ using System.Collections.Generic;
 //using Unity.VisualScripting;
 // using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using TMPro;
 
 public class RubyController : MonoBehaviour
 {
@@ -40,6 +41,18 @@ public class RubyController : MonoBehaviour
     public ParticleSystem looseHealth;
 
     public int scoreNum;
+
+    [SerializeField] private GameObject boss; //Added by Sadie Raghunand for boss mechanic lines 44 - 51
+    [SerializeField] private GameObject spawnPos;
+    private int count = 0;
+    public GameObject arena;
+    public Vector2 bossFightPos;
+    public TextMeshProUGUI scoreText;
+    [SerializeField] private Vector2 powerupPos;
+    public GameObject powerup; //Added by Remond Elia for powerup mechanic, lines 52-54
+    public float attackForce = 300;
+    public SpriteRenderer PowerColor;
+    public bool hasPowerup;
 
 
     // Start is called before the first frame update
@@ -94,6 +107,24 @@ public class RubyController : MonoBehaviour
                 }
             }
         }
+
+
+        //Lines 99 - 114 written by Sadie Raghunand
+        if(scoreNum == 3 && count == 0)
+        {
+            arena.SetActive(true);
+            Instantiate(boss, spawnPos.transform.position, boss.transform.rotation);
+            Instantiate(powerup, powerupPos, powerup.transform.rotation);
+            count++;
+            transform.position = bossFightPos;
+            
+        }
+
+        //Lines 124 - 128 written by Remond Elia
+        if(hasPowerup)
+        {
+            StartCoroutine(PowerupTimer());
+        }
     }
 
     // Change the f value to modify Rudy's speed
@@ -138,7 +169,7 @@ public class RubyController : MonoBehaviour
         GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
 
         Projectile projectile = projectileObject.GetComponent<Projectile>();
-        projectile.Launch(lookDirection, 300);
+        projectile.Launch(lookDirection, attackForce);
 
         animator.SetTrigger("Launch");
 
@@ -149,5 +180,15 @@ public class RubyController : MonoBehaviour
     public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+
+    public IEnumerator PowerupTimer() //Lines 178 - 185 were written by Remond Elia
+    {
+        yield return new WaitForSeconds(5);
+        hasPowerup = false;
+        speed = 3;
+        attackForce = 300;
+        PowerColor.color = new Color(255, 255, 255);
+
     }
 }
