@@ -109,7 +109,7 @@ public class RubyController : MonoBehaviour
         }
 
 
-        //Lines 99 - 114 written by Sadie Raghunand
+        //Lines 99 - 121 written by Sadie Raghunand
         if(scoreNum == 3 && count == 0)
         {
             arena.SetActive(true);
